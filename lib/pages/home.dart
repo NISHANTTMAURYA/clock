@@ -90,7 +90,7 @@ void setupFlag() async{
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.max,
             children: [
               Card(
@@ -103,7 +103,7 @@ void setupFlag() async{
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisSize: MainAxisSize.max,
                     children: [
                       Flexible(
                         child: Column(
@@ -131,8 +131,6 @@ void setupFlag() async{
                                 fontFamily: 'freedom',
                                 height: 0.9,
                               ),
-                              minFontSize: 20,
-                              maxFontSize: 40,
                               textAlign: TextAlign.center,
                               maxLines: 2,
                             ),
@@ -158,12 +156,12 @@ void setupFlag() async{
                   borderRadius: BorderRadius.circular(12.0),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       AutoSizeText(
-                        'Current Date  $date',
+                        'Current Date - $date',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 40,
@@ -171,8 +169,6 @@ void setupFlag() async{
                           fontFamily: 'freedom',
                           height: 1,
                         ),
-                        minFontSize: 20,
-                        maxFontSize: 40,
                         textAlign: TextAlign.center,
                         maxLines: 1,
                       ),
@@ -186,14 +182,12 @@ void setupFlag() async{
                           fontFamily: 'freedom',
                           height: 1,
                         ),
-                        minFontSize: 20,
-                        maxFontSize: 40,
                         textAlign: TextAlign.center,
                         maxLines: 1,
                       ),
                       SizedBox(height: 16),
                       AutoSizeText(
-                        'Current time  $time',
+                        'Current time - $time',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 40,
@@ -201,8 +195,6 @@ void setupFlag() async{
                           fontFamily: 'freedom',
                           height: 1,
                         ),
-                        minFontSize: 20,
-                        maxFontSize: 40,
                         textAlign: TextAlign.center,
                         maxLines: 1,
                       ),
