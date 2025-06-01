@@ -13,12 +13,17 @@ class _ClockWithCachedImageState extends State<ClockWithCachedImage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenRatio = MediaQuery.of(context).devicePixelRatio;
+    final textScale=MediaQuery.of(context).textScaleFactor;
+    final statusbar_height = MediaQuery.of(context).padding.top;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return CachedNetworkImage(
       imageUrl: widget.imageUrl,
       imageBuilder: (context, imageProvider) {
         // Image loaded successfully
         return AnimatedAnalogClock(
-          size: 200,
+          size: screenRatio*45,
           backgroundImage: imageProvider, // Use the cached image here!
           dialType: DialType.numberAndDashes,
           numberColor: Colors.black,

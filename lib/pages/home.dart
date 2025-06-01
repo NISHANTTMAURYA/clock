@@ -15,75 +15,79 @@ class home extends StatefulWidget {
 }
 
 class _homeState extends State<home> {
-  String timezone='none';
-  String date='none';
-  String day='none';
-  String time='none';
-  String countryCode='';
+  String timezone = 'none';
+  String date = 'none';
+  String day = 'none';
+  String time = 'none';
+  String countryCode = '';
   String timezone_prefix = '';
   String timezone_suffix = '';
   String url = '';
 
-  void setupWorldTime() async{
-    WorldTime instance = WorldTime(timezone_prefix: timezone_prefix,timezone_suffix:timezone_suffix);
+  void setupWorldTime() async {
+    WorldTime instance = WorldTime(
+      timezone_prefix: timezone_prefix,
+      timezone_suffix: timezone_suffix,
+    );
     await instance.getTime();
     setState(() {
-
       date = instance.date;
       day = instance.day;
       time = instance.time;
     });
+  }
 
-
-}
-void setupFlag() async{
-
-}
-  void get_country_code() async{
-    GetIp userData =  GetIp();
+  void setupFlag() async {}
+  void get_country_code() async {
+    GetIp userData = GetIp();
     await userData.getIp();
-    timezone=userData.timezone;
-    countryCode=userData.countryCode.toLowerCase();
+    timezone = userData.timezone;
+    countryCode = userData.countryCode.toLowerCase();
     Flag flag = Flag(countryCode: countryCode);
     String flag_urll = await flag.flag_url();
     setState(() {
       print(flag_urll);
-      url=flag_urll;
-
+      url = flag_urll;
     });
     List<String> parts = timezone.split('/');
-
 
     timezone_prefix = parts.length > 0 ? parts[0] : 'none';
     timezone_suffix = parts.length > 1 ? parts[1] : 'none';
     setupWorldTime();
-
-
   }
+
   @override
   void initState() {
     super.initState();
     get_country_code();
-
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "WORLD CLOCK ",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 40,
-            fontFamily: 'freedom',
-            letterSpacing: 2,
-          ),
+    final screenRatio = MediaQuery.of(context).devicePixelRatio;
+    final textScale = MediaQuery.of(context).textScaleFactor;
+    final statusbar_height = MediaQuery.of(context).padding.top;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final Appbar = AppBar(
+      centerTitle: true,
+      title: Text(
+        "WORLD CLOCK ",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: screenWidth * 0.09,
+          fontFamily: 'freedom',
+          letterSpacing: 2,
         ),
-        backgroundColor: Colors.lightBlue,
-        elevation: 4.0,
       ),
+      backgroundColor: Colors.lightBlue,
+      elevation: 4.0,
+    );
+
+    final appbar_height = Appbar.preferredSize.height;
+
+    return Scaffold(
+      appBar: Appbar,
       backgroundColor: Colors.grey[100],
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -100,51 +104,45 @@ void setupFlag() async{
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Row(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Flexible(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            AutoSizeText(
-                              "TIMEZONE",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                                fontFamily: 'freedom',
-                                letterSpacing: 2,
-                              ),
-                              textAlign: TextAlign.center,
-                              maxLines: 1,
-                            ),
-                            SizedBox(height: 8),
-                            AutoSizeText(
-                              timezone,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 40,
-                                letterSpacing: 1,
-                                fontFamily: 'freedom',
-                                height: 0.9,
-                              ),
-                              textAlign: TextAlign.center,
-                              maxLines: 2,
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 16),
                       url.isNotEmpty
                           ? ClockWithCachedImage(imageUrl: url)
                           : SizedBox(
-                        width: 100,
-                        height: 100,
-                        child: Image.asset('assets/loader.gif'),
+                              width: 100,
+                              height: 100,
+                              child: Image.asset('assets/loader.gif'),
+                            ),
+                      SizedBox(height: 16),
+                      AutoSizeText(
+                        "TIMEZONE",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 40,
+                          fontFamily: 'freedom',
+                          letterSpacing: 2,
+                        ),
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
                       ),
+                      SizedBox(height: 8),
+                      AutoSizeText(
+                        timezone,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 40,
+                          letterSpacing: 1,
+                          fontFamily: 'freedom',
+                          height: 0.9,
+                        ),
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                      ),
+
+                      SizedBox(height: 16),
                     ],
                   ),
                 ),
@@ -156,9 +154,13 @@ void setupFlag() async{
                   borderRadius: BorderRadius.circular(12.0),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8.0,
+                    vertical: 16.0,
+                  ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
                     children: [
                       AutoSizeText(
                         'Current Date - $date',
@@ -209,7 +211,3 @@ void setupFlag() async{
     );
   }
 }
-
-
-
-
