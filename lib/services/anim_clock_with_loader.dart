@@ -3,7 +3,8 @@ import 'package:animated_analog_clock/animated_analog_clock.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 class ClockWithCachedImage extends StatefulWidget {
   final String imageUrl;
-  ClockWithCachedImage({required this.imageUrl, Key? key}) : super(key: key);
+  final String location;
+  ClockWithCachedImage({required this.imageUrl,required this.location , Key? key}) : super(key: key);
 
   @override
   _ClockWithCachedImageState createState() => _ClockWithCachedImageState();
@@ -27,6 +28,7 @@ class _ClockWithCachedImageState extends State<ClockWithCachedImage> {
           backgroundImage: imageProvider, // Use the cached image here!
           dialType: DialType.numberAndDashes,
           numberColor: Colors.black,
+          location: widget.location,
         );
       },
       placeholder: (context, url) => Center(

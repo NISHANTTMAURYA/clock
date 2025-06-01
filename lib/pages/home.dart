@@ -110,7 +110,7 @@ class _homeState extends State<home> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       url.isNotEmpty
-                          ? ClockWithCachedImage(imageUrl: url)
+                          ? ClockWithCachedImage(imageUrl: url,location:timezone)
                           : SizedBox(
                               width: 100,
                               height: 100,
